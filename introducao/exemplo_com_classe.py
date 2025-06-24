@@ -14,7 +14,7 @@ class MinhaTela:
 
         self.nome = tk.Label(self.container, text="um texto aí")
         self.telefone = tk.Label(self.janela, text="marcos..@gmail.com")
-        self.nome.pack()
+        self.nome.place(x=10,y=10)
         self.telefone.pack()
 
 
