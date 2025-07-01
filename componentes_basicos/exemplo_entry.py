@@ -1,4 +1,5 @@
 import tkinter as tk
+
 class Tela:
     def __init__(self, master):
         self.janela = master
