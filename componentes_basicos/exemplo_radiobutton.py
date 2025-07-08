@@ -6,6 +6,7 @@ class Tela:
     def __init__(self, master):
         self.janela = master
         self.janela.geometry('200x200')
+
         self.var_rbt = tk.IntVar()
         self.d = {1:"Pudim", 2:"Bolo", 3:"Pavê", 4:"Mousse de Araça Boi"}
         for chave,valor in self.d.items():
