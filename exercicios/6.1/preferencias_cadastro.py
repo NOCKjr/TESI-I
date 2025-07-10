@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class Tela:
+class Preferencias_cadastro:
     def __init__(self, master):
 
         self.janela = master
@@ -46,7 +46,18 @@ class Tela:
             self.cbt3.pack()
             self.cbt4.pack()
             self.cbt5.pack()
+        else:
+            # destroy: apaga o elemento da memória
+            # pack_forget: apenas faz com que não seja exibido,
+            # mas continua na memória e pode reaparecer
+            self.lbl_check.pack_forget()
+            self.cbt0.pack_forget()
+            self.cbt1.pack_forget()
+            self.cbt2.pack_forget()
+            self.cbt3.pack_forget()
+            self.cbt4.pack_forget()
+            self.cbt5.pack_forget()
 
-gui = tk.Tk()
-tela = Tela(gui)
-tela.janela.mainloop()
+# gui = tk.Tk()
+# Preferencias_cadastro(gui)
+# gui.mainloop()

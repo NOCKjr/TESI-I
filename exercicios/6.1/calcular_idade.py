@@ -1,7 +1,7 @@
 import tkinter as tk
 from datetime import date
 
-class Tela:
+class Calcular_idade :
     def __init__(self, master):
         self.janela = master
         self.janela.geometry("400x350")
@@ -24,7 +24,7 @@ class Tela:
 
         self.bnt_calcular =tk.Button(self.janela, text="Calcular Idade", command=self.calcular_idade).pack()
 
-        self.lbl_idade = tk.Label(self.janela, text="T")
+        self.lbl_idade = tk.Label(self.janela, text="")
         self.lbl_idade.pack()
 
     def calcular_idade(self):
@@ -52,7 +52,3 @@ class Tela:
             meses += 12
 
         self.lbl_idade["text"] = f"Idade: {anos} anos, {meses} meses e {dias} dias ou {(date.today() - date(ano_nas, mes_nas, dia_nas)).days} dias"
-
-gui = tk.Tk()
-tela = Tela(gui)
-tela.janela.mainloop()

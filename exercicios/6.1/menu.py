@@ -1,6 +1,6 @@
 import tkinter as tk
-import cadastro
-import idade
+from calcular_idade import Calcular_idade
+from preferencias_cadastro import Preferencias_cadastro
 
 class Tela:
     def __init__(self, master):
@@ -19,14 +19,11 @@ class Tela:
         self.janela.config(menu=self.mnu_barra)
 
     def idade(self):
-        t_info = tk.Tk()
-        info.Tela(t_info)
-        t_info.mainloop()
+        Calcular_idade(tk.Tk())
 
     def cad(self):
-        t_cad = tk.Tk()
-        cadastro.Tela(t_cad)
-        t_cad.mainloop()
+        # bugando
+        Preferencias_cadastro(tk.Tk())
 
 gui = tk.Tk()
 tela = Tela(gui)
