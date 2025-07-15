@@ -27,6 +27,6 @@ class Radio:
             case 4:
                 messagebox.showinfo('Sobremesa', 'Mousse de araçá boi')
 
-# gui = tk.Tk()
-# Radio(gui)
-# gui.mainloop()
+gui = tk.Tk()
+Radio(gui)
+gui.mainloop()
