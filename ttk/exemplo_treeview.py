@@ -5,6 +5,7 @@ from tkinter import ttk, messagebox
 class Tela:
     def __init__(self, master):
         self.janela = master
+        #self.janela.geometry('800x300')
         colunas = ['nome', 'cpf', 'email']
         self.tvw = ttk.Treeview(self.janela, height=5, columns=colunas, show='headings')
         #Configurar o cabaçalho das colunas
@@ -43,6 +44,20 @@ class Tela:
         self.btn_editar = ttk.Button(self.frm_botoes, text='Editar', command=self.editar)
         self.btn_editar.grid(row=0, column=2)
 
+        self.centralizar(self.janela)
+
+    def centralizar(self, master):
+        largura_monitor = master.winfo_screenwidth()
+        altura_monitor = master.winfo_screenheight()
+        #print(largura_monitor, altura_monitor)
+        master.update_idletasks()
+        largura_janela = master.winfo_width()
+        altura_janela = master.winfo_height()
+        #print(largura_janela, altura_janela)
+        x = largura_monitor//2 - largura_janela//2
+        y = altura_monitor//2 - altura_janela//2
+        master.geometry(f'{largura_janela}x{altura_janela}+{x}+{y}')
+
     def cadastrar(self):
         self.top_cadastrar = tk.Toplevel(self.janela)
         self.top_cadastrar.grab_set()
@@ -62,6 +77,7 @@ class Tela:
 
         self.btn_confirmar_cadastro = ttk.Button(self.top_cadastrar, text="Confirmar Cadastro", command=self.confirmar_cadastro)
         self.btn_confirmar_cadastro.grid(row=3, column=0, columnspan=2, stick='we')
+        self.centralizar(self.top_cadastrar)
     def confirmar_cadastro(self):
         nome = self.ent_nome.get()
         cpf = self.ent_cpf.get()
