@@ -4,7 +4,6 @@ class Model:
     def __init__(self):
         self.con = Conexao()
     def get(self, sql):
-        #sql = 'SELECT * FROM CLIENTES;'
         try:
             con = self.con.get_conexao()
             cursor = con.cursor()
@@ -14,8 +13,21 @@ class Model:
         except Error as er:
             print(er)
 
-    def set(self, sql):
+    def insert(self, sql):
         #sql = 'INSERT INTO CLIENTES(nome, cpf) values("TESTES", "0000000007");'
+        try:
+            con = self.con.get_conexao()
+            cursor = con.cursor()
+            cursor.execute(sql)
+            cont = cursor.rowcount
+            if cursor.rowcount == 1:
+                con.commit()
+            con.close()
+            return cont
+        except Error as er:
+            print(er)
+
+    def delete(self, sql):
         try:
             con = self.con.get_conexao()
             cursor = con.cursor()
@@ -23,5 +35,6 @@ class Model:
             if cursor.rowcount == 1:
                 con.commit()
             con.close()
+            return cursor.rowcount
         except Error as er:
             print(er)
