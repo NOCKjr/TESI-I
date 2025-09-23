@@ -18,6 +18,7 @@ class Tela:
 
         #listando clientes
         self.controle_clientes = control.ControllerCliente()
+        self.controle_clientes.criar_tabelas()
         tuplas = self.controle_clientes.listar_clientes()
         for item in tuplas:
             print(item)
@@ -36,6 +37,13 @@ class Tela:
                                      command=self.editar)
         self.btn_editar.grid(row=0, column=2)
         self.centraliza(self.janela)
+
+        self.btn_pesquisar = ttk.Button(self.frm_botoes, text='pesquisar...', command=self.atualizar_treeview)
+        self.btn_pesquisar.grid(row=0, column=3)
+
+        self.ent_pesquisar = ttk.Entry(self.frm_botoes)
+        self.ent_pesquisar.grid(row=1, column=0, columnspan=4)
+
 
     def centraliza(self, master):
         # Criar uma forma de centralizar a janela
@@ -70,24 +78,19 @@ class Tela:
         if len(self.item_selecionado) != 1:
             messagebox.showwarning('Aviso', 'Selecione um item')
         else:
-            dados = self.tvw.item(self.item_selecionado, 'values')
+            self.dados = self.tvw.item(self.item_selecionado, 'values')
             self.top_editar = ttk.Toplevel(self.janela)
             self.top_editar.grab_set()
             self.lbl_nome = ttk.Label(self.top_editar, text='NOME:').grid(
                 row=0, column=0)
             self.lbl_cpf = ttk.Label(self.top_editar, text='CPF:').grid(
                 row=1, column=0)
-            self.lbl_email = ttk.Label(self.top_editar, text='EMAIL:').grid(
-                row=2, column=0)
             self.ent_nome = (ttk.Entry(self.top_editar))
             self.ent_nome.grid(row=0, column=1)
-            self.ent_nome.insert('end', dados[0]) #Preenche o campo de entrada
+            self.ent_nome.insert('end', self.dados[1]) #Preenche o campo de entrada
             self.ent_cpf = (ttk.Entry(self.top_editar))
             self.ent_cpf.grid(row=1, column=1)
-            self.ent_cpf.insert('end', dados[1]) #Preenche o campo de entrada
-            self.ent_email = (ttk.Entry(self.top_editar))
-            self.ent_email.grid(row=2, column=1)
-            self.ent_email.insert('end', dados[2]) #Preenche o campo de entrada
+            self.ent_cpf.insert('end', self.dados[2]) #Preenche o campo de entrada
             self.btn_confirmar_edicao = ttk.Button(self.top_editar,
                                                      text='Confirmar '
                                                           'Edição',
@@ -96,13 +99,17 @@ class Tela:
                 column=0, columnspan=2, sticky='we')
 
     def confirmar_edicao(self):
+        id = self.dados[0]
         nome = self.ent_nome.get()
         cpf = self.ent_cpf.get()
-        email = self.ent_email.get()
-        if nome == '' or cpf == '' or email == '':
+        if nome == '' or cpf == '':
             messagebox.showwarning('Aviso', 'Todos os campos são obrigatórios')
         else:
-            self.tvw.item(self.item_selecionado, values=(nome,cpf, email))
+            #leva a alteração do formulario para o banco de dados
+            self.controle_clientes.editar_clientes(id, nome, cpf)
+            #alteção do componente tree view
+            #self.tvw.item(self.item_selecionado, values=(nome,cpf, email))
+            self.atualizar_treeview()
             self.top_editar.destroy()
             self.janela.deiconify()
 
@@ -139,10 +146,11 @@ class Tela:
             self.top_cadastrar.destroy()
             self.janela.deiconify()
     def atualizar_treeview(self):
+        nome = self.ent_pesquisar.get()
         dados = self.tvw.get_children()
         for item in dados:
             self.tvw.delete(item)
-        tuplas = self.controle_clientes.listar_clientes()
+        tuplas = self.controle_clientes.listar_clientes(nome)
         for item in tuplas:
             self.tvw.insert('', 'end', values=item)
 
